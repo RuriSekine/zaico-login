@@ -1,0 +1,68 @@
+.tittle {
+    white-space: nowrap;
+    text-align: center; 
+}
+
+body {
+    padding-top: 100px;
+    padding-bottom: 500px;
+}
+
+.Details {
+    width: 80%;
+    max-width: 500px;
+    margin: auto;
+    margin-top: 50px;
+    font-weight: 400;
+}
+
+.border {
+    padding-top: 30px;
+    width: 110%;
+    padding-right: 30px;
+}
+
+
+img {
+    max-width: 200px; 
+    height: auto;     
+}
+
+.btn-class {
+    display: flex;
+    justify-content:space-around;
+}
+
+.btn {
+    margin-top: 35px;
+    margin-bottom: 40px;
+}
+
+.btn-wide {
+    padding-left: 40px !important;
+    padding-right: 40px !important; 
+}
+
+.product-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 5px;
+    font-size: larger;
+    margin: 10px 0; 
+    width: 100%;
+}
+
+p {
+    flex: 1;
+    margin-left: 30px;
+}
+
+.card {
+    flex: 1;
+}
+
+span {
+    text-align: left;
+    flex: 1;
+}

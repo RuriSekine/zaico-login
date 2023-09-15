@@ -1,0 +1,46 @@
+.tittle {
+    white-space: nowrap;
+    text-align: center; 
+}
+
+body {
+    padding-top: 100px;
+    padding-bottom: 60px;
+    background-color: whitesmoke;
+}
+
+.link {
+    border: 1px solid black;
+    width: 60%;
+    background-color: whitesmoke;
+    height: auto;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px 10px 40px 30px;
+    font-size: 20px;
+}
+
+th , td{
+    padding: 12px;
+}
+
+.btn-lg {
+    --bs-btn-font-size: 1.125rem;
+}
+
+a.btn {
+    --bs-btn-font-size: 1.125rem;
+}
+
+.btn {
+    width: 100px;
+}
+
+.input-group {
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    max-width: 500px;
+}

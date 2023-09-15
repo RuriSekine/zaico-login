@@ -1,0 +1,77 @@
+.tittle {
+    white-space: nowrap;
+    text-align: center; 
+}
+
+body {
+    padding-top: 100px;
+    padding-bottom: 500px;
+    background-color: whitesmoke;
+}
+
+.border {
+    padding-top: 30px;
+    width: 600px;
+}
+
+.form-create {
+    width: 80%;
+    max-width: 500px;
+    margin: auto;
+    font-weight: 400;
+}
+
+.form-control {
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.btn-class {
+    display: flex;
+    justify-content:space-around;
+}
+
+.btn {
+    margin-top: 40px;
+    margin-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 30px; 
+    text-align: center;
+    line-height: 60px;  /* この値はボタンの高さと合わせてください */
+    display: inline-block;
+}
+
+.form-create .btn-wide {
+    padding-left: 40px;
+    padding-right: 40px; 
+}
+
+.alert {
+    text-align: center;
+}
+
+.required {
+    color: red;
+}
+
+.input-group label {
+    width: 100px;  
+    text-align: right;  
+    margin-right: 30px; 
+}
+
+.form-create .input-group {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: static;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.form-create .comment-input {
+    padding: 60px;
+}
+
+label {
+    font-weight:  bold;
+}
