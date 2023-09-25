@@ -7,6 +7,7 @@ use App\Models\Product; // Productモデルの使用を宣言
 use App\Models\Company; // companyモデルの使用を宣言
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage; 
+use Illuminate\Support\Facades\DB;
 
 
 class ProductController extends Controller
@@ -16,9 +17,22 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index(Request $request) {
         $companies = Company::all();
-        $products = Product::paginate(10); //10ページずつ表示
+
+        $query = Product::query();
+
+        // キーワードによる検索
+        if ($request->filled('keyword')) {
+        $query->where('product_name', 'LIKE', '%' . $request->input('keyword') . '%');
+        }
+
+        // メーカー名による絞り込み
+        if ($request->filled('select')) {
+        $query->where('company_id', $request->input('select'));
+        }
+
+        $products = $query->paginate(10);//10ページずつ表示
         return view('login.product', ['companies' => $companies, 'products' => $products]);//$companiesと$productsというデータをresourcesのviewのビューファイルproduct.blade.phpに渡して表示せよ
     }
 
@@ -29,7 +43,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('login.product_create');  // 新規登録フォームのビューを表示
+        $companies = Company::all();
+        return view('login.product_create',['companies' => $companies]);  // 新規登録フォームのビューを表示
     }
 
     /**
@@ -40,6 +55,7 @@ class ProductController extends Controller
      */
     public function store(Request $request){
 
+        DB::transaction(function () use ($request) {
         // データのバリデーション
         $this->validator($request->all())->validate();
 
@@ -51,12 +67,13 @@ class ProductController extends Controller
 
         // バリデーションが通ったら商品をデータベースに作成(モデル)
         Product::createProduct(array_merge($request->all(), ['img_path' => $path]));
-        
+        });
 
         //コメント表示
         return view('login.product_success');
-        }
-    
+        
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *入力されたデータが特定の条件やルールに合致するかを確認する
@@ -97,8 +114,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-
-        return view('login.product_edit', compact('product'));
+        $companies = Company::all();
+        return view('login.product_edit', ['product' => $product, 'companies' => $companies]);
     }
 
     /**
@@ -110,6 +127,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        DB::transaction(function () use ($request, $id) {
         $product = Product::find($id);  //IDを検索
 
         // データのバリデーション
@@ -130,9 +148,11 @@ class ProductController extends Controller
         //$productDate変数にまとめる
         $productData = array_merge($request->all(), ['img_path' => $path]);
         $product->updateProduct($productData);
+        });
 
         //コメント表示
         return view('login.product_update'); 
+        
     }
 
     /**
@@ -143,14 +163,16 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+        DB::transaction(function () use ($id) {
         $product = Product::find($id);
         
         //削除処理
         $product->delete();
+        });
 
         //コメント表示
         return view('login.product_delete');
-
+        
     }
 
 }

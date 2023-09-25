@@ -26,7 +26,12 @@
             </div>
             <div class="input-group">
                 <label for="inputCompany">メーカー名<span class="required">*</span></label>
-                <input type="text" id="inputCompany" name="company_name"  value="{{ $product->company->company_name }}" class="form-control" required>
+                <select id="inputSelect" name="select" class="form-select">
+                    @foreach ($companies as $company)
+                    <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                    @endforeach
+                </select>
+                <!--<input type="text" id="inputCompany" name="company_name"  value="{{ $product->company->company_name }}" class="form-control" required>-->
             </div>
             <div class="input-group">
                 <label for="inputPrice">価格<span class="required">*</span></label>

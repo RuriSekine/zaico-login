@@ -25,20 +25,24 @@
     </div>
     @endif
     <h1 class="tittle">商品一覧画面</h1>
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="検索キーワード">
-        <div class="input-group-select">
-            <select id="inputSelect" name="select" class="form-select">
-                <option value="">メーカー名</option>
-                @foreach ($companies as $company)
-                <option value="{{ $company->id }}">{{ $company->company_name }}</option>
-                @endforeach
-            </select>
+    <div class="center-container">
+        <div class="input-group">
+            <form method="GET" action="{{ route('products.index') }}">
+                <input type="text" class="form-control" placeholder="検索キーワード" name="keyword">
+                    <div class="input-group-select">
+                        <select id="inputSelect" name="select" class="form-select">
+                            <option value="">メーカー名</option>
+                            @foreach ($companies as $company)
+                                <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+            <span class="input-group btn">
+                <button type="submit" class="btn btn-primary">検索</button>
+            </span>
+            </form>    
         </div>
-        <span class="input-group-btn">
-            <button type="button" class="btn btn-primary">検索</button>
-        </span>
-    </div>
+    </div>    
     <div class='link'>
     <table>
         <thead>
@@ -58,7 +62,7 @@
     @foreach ($products as $product)
         <tr>
             <td>{{ $product->id }}</td>
-            <td>商品画像</td>
+            <td><img src="{{ asset('storage/' . $product->img_path) }}" alt="商品画像" style="width: 100px"></td>
             <td>{{ $product->product_name }}</td>
             <td>{{ $product->price }}</td>
             <td>{{ $product->stock }}</td>

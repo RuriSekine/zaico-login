@@ -38,9 +38,38 @@ a.btn {
     width: 100px;
 }
 
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; 
+}
+
 .input-group {
-    text-align: center;
-    width: 80%;
+    flex-direction: row;
+    width: 100%;
+    max-width: 600px; 
     margin: 0 auto;
-    max-width: 500px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+
+.form-control {
+    padding-right: 30px;
+    margin-bottom: 10px;
+}
+
+.form-select {
+    padding-right: 30px;
+}
+
+
+.input-group > * {
+    flex: 1 0 50%;
+}
+
+.input-group .btn {
+    width: 300px;
 }
