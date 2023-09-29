@@ -33,14 +33,21 @@ class Product extends Model
     public static function createProduct(array $data)
     {
         
-        $company = Company::firstOrCreate([
+        /**$company = Company::firstOrCreate([
             'company_name' => $data['company_name'],
             'street_address' => $data['street_address'] ?? "",
             'representative_name' => $data['representative_name'] ?? "",
         ]);
-        
+        */
+             // 会社の名前からIDを取得
+            $company = Company::where('company_name', $data['company_name'])->first();
+            if (!$company) {
+                throw new \Exception("The company with name {$data['company_name']} not found.");
+            }
+            $data['company_id'] = $company->id;
+
             return Product::create([
-            'company_id' => $company->id,
+            'company_id' => $data['company_id'],
             'product_name'=> $data['product_name'],
             'price' => '￥' . $data['price'],
             'stock' => $data['stock'],
@@ -49,14 +56,20 @@ class Product extends Model
         ]);
     }
 
-    public function updateProduct($data)
+    public function updateProduct(array $data)
     {
         
-        $company = Company::firstOrCreate([
+        /**$company = Company::firstOrCreate([
             'company_name' => $data['company_name'],
         ]);
-        
-            $this->company_id = $company->id;
+        */
+            $company = Company::where('company_name', $data['company_name'])->first();
+            if (!$company) {
+                throw new \Exception("The company with name {$data['company_name']} not found.");
+            }
+            $data['company_id'] = $company->id;
+
+            $this->company_id = $data['company_id'];
             $this->product_name = $data['product_name'];
             $this->price = '￥' . $data['price'];
             $this->stock = $data['stock'];

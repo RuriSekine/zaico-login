@@ -31,9 +31,9 @@
                 </div>
                 <div class="input-group">
                     <label for="inputCompany">メーカー名<span class="required">*</span></label>
-                    <select id="inputSelect" name="select" class="form-select">
+                    <select id="inputSelect" name="company_name" class="form-select">
                         @foreach ($companies as $company)
-                        <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                        <option value="{{ $company->company_name }}">{{ $company->company_name }}</option>
                         @endforeach
                     </select>
                 </div>

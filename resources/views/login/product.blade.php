@@ -30,10 +30,10 @@
             <form method="GET" action="{{ route('products.index') }}">
                 <input type="text" class="form-control" placeholder="検索キーワード" name="keyword">
                     <div class="input-group-select">
-                        <select id="inputSelect" name="select" class="form-select">
+                        <select id="inputSelect" name="company_name" class="form-select">
                             <option value="">メーカー名</option>
                             @foreach ($companies as $company)
-                                <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                                <option value="{{ $company->company_name }}">{{ $company->company_name }}</option>
                             @endforeach
                         </select>
                     </div>

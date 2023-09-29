@@ -28,8 +28,8 @@ class ProductController extends Controller
         }
 
         // メーカー名による絞り込み
-        if ($request->filled('select')) {
-        $query->where('company_id', $request->input('select'));
+        if ($request->filled('name')) {
+        $query->where('company_id', $request->input('name'));
         }
 
         $products = $query->paginate(10);//10ページずつ表示
@@ -84,7 +84,7 @@ class ProductController extends Controller
     {
     return Validator::make($data, [
         'product_name' => ['required', 'string', 'max:255'],
-        'company_name' => ['required', 'string', 'max:255'],
+        'company_name' => ['required', 'string', 'max:255', 'exists:companies,company_name'],
         'price' => ['required', 'numeric', 'min:0'],
         'stock' => ['required', 'integer', 'min:0'],
     ]);
