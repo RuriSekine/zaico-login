@@ -214,27 +214,40 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        Log::info('Deleting product with ID: ' . $id);
+        Log::info('Attempting to delete product with ID: ' . $id);
 
-        //$deleted = DB::transaction(function () use ($id) { //$deleted変数を使ってトランザクション内の処理結果を返す
-            //$product = Product::find($id);
+        try{
+            $deleted = DB::transaction(function () use ($id) { //$deleted変数を使ってトランザクション内の処理結果を返す
+            $product = Product::find($id);
         
                 //削除処理
                 //$product->delete();
-                //if ($product) {
+                if ($product) {
                     // 商品を削除
-                    //$product->delete();
-                    //Log::info('Product deleted successfully.');
-                    //return true;
-                //} else {
+                    $product->delete();
+                    Log::info('Product deleted successfully.');
+                    return true;
+                } else {
                     // 商品が見つからない場合の処理（例外処理など）
-                    //return false;
-                //}
-        //});       
-        
-        // 商品を削除せず、ただログを残し、成功レスポンスを返す
-        return response()->json(['message' => '商品を削除(非表示)にしました'], 200);
+                    return false;
+                }
+            });
 
+        //コメント表示
+        //return view('login.product_delete');
+        // 削除成功をJSONで返す
+            if ($deleted) {
+                // 削除成功をJSONで返す
+                return response()->json(['message' => '商品を削除しました'], 200);
+            } else {
+            // 商品が見つからなかった場合
+                return response()->json(['message' => '商品が見つかりませんでした'], 404);
+            }
+        } catch (\Exception $e) {
+            //予期しないエラーが発生したとき
+            Log::error('Failed to delete product with ID: ' . $id . ' - ' . $e->getMessage());
+            return response()->json(['message' => '削除中にエラーが発生しました'], 500);
+        }
     }
 
 }

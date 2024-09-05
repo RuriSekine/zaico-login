@@ -64,11 +64,22 @@ $(document).ready(function() {
 
             // フォームデータを収集
             var form = $(this);
+            var deleteUrl = form.attr('action'); // 削除URLを取得
 
-            // 商品の行を非表示にする処理
-            form.closest('tr').fadeOut('fast', function() {
-            // 非表示になった後にアラートを表示
-            alert('削除(非表示)にしました');
+            $.ajax({
+                url: deleteUrl,
+                method: 'DELETE',
+                success: function(response) {
+                    // 削除成功時の処理
+                    form.closest('tr').fadeOut('fast', function() {
+                        $(this).remove();
+                    });
+                    alert(response.message); // 成功メッセージを表示
+                },
+                error: function(xhr) {
+                    // エラーハンドリング
+                    alert('削除に失敗しました');
+                }
             });
         });
     }
