@@ -9,8 +9,83 @@ body {
     background-color: whitesmoke;
 }
 
+.input-group {
+    justify-content: center;
+    margin-inline: auto;
+    max-width: 800px;
+}
+
+.price-group {
+    display: flex;
+    justify-content: center;
+    margin-inline: auto;
+    max-width: 800px;
+    position: relative;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+}
+
+.price-min , .price-max {
+    padding: 6px 0.98rem;
+    font-size: .9rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    appearance: none;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.stock-min , .stock-max {
+    padding-right: 29px;
+}
+
+.stock-min , .stock-max {
+    padding: 6px 0.98rem;
+    font-size: .9rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    appearance: none;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+
+.stock-group {
+    display: flex;
+    justify-content: center;
+}
+
+.search {
+    padding-left: 30px;
+}
+
+.form-control {
+    padding-right: 19px;
+}
+
+.form-select {
+    padding-right: 100px;
+}
+
+.search .btn {
+    width: 80px;
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+}
+
 .link {
     border: 1px solid black;
+    border-collapse: collapse;
     width: 60%;
     background-color: whitesmoke;
     height: auto;
@@ -22,54 +97,53 @@ body {
     font-size: 20px;
 }
 
-th , td{
-    padding: 12px;
+.table {
+    --bs-table-bg: transparent; /* テーブルの背景色を透明にする */
+    border-collapse: collapse; /* テーブルのボーダーを重ねて描画 */
+    width: 100% !important; /* テーブルを親要素の幅に合わせる */
 }
 
-.btn-lg {
-    --bs-btn-font-size: 1.125rem;
+thead, tbody, tfoot, tr, td, th {
+    border-style: none;
 }
 
-a.btn {
-    --bs-btn-font-size: 1.125rem;
+.table thead th {
+    vertical-align: middle;
+    border-bottom: none;
 }
 
-.btn {
-    width: 100px;
+.table th, .table td {
+    padding: 12px !important; /* セル内のコンテンツの間隔を設定 */
+    border: none; /* デフォルトのボーダーを削除 */
+    vertical-align: middle !important;
 }
 
-.center-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px; 
+.table-bordered {
+    border: none;
 }
 
-.input-group {
-    flex-direction: row;
-    width: 100%;
-    max-width: 600px; 
-    margin: 0 auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    
+.table th {
+    text-align: left; /* テキストの左揃え */
 }
 
-.form-control {
-    padding-right: 30px;
-    margin-bottom: 10px;
+.tablesorter-default {
+    width: auto;
+    font: inherit !important;
+    color: inherit !important;
+    background-color: transparent !important;
+    border-spacing: inherit !important;
+    text-align: inherit !important;
 }
 
-.form-select {
-    padding-right: 30px;
+.tablesorter-default th, .tablesorter-default td {
+    background-color: transparent !important;  /* 背景色を透明に設定 */
+    border: none !important;  /* ボーダーを無効に設定 */
 }
 
-
-.input-group > * {
-    flex: 1 0 50%;
+.btn-danger {
+    padding: 15px 30px;
 }
 
-.input-group .btn {
-    width: 300px;
+a.btn-primary {
+    padding: 18px 30px !important;
 }

@@ -8,6 +8,7 @@ use App\Models\Company; // companyモデルの使用を宣言
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage; 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 class ProductController extends Controller
@@ -22,18 +23,68 @@ class ProductController extends Controller
 
         $query = Product::query();
 
-        // キーワードによる検索
-        if ($request->filled('keyword')) {
-        $query->where('product_name', 'LIKE', '%' . $request->input('keyword') . '%');
-        }
+        /**
+         * キーワードによる検索
+         * if ($request->filled('keyword')) {
+         * $query->where('product_name', 'LIKE', '%' . $request->input('keyword') . '%');
+         * }
 
-        // メーカー名による絞り込み
-        if ($request->filled('name')) {
-        $query->where('company_id', $request->input('name'));
-        }
+         * // メーカー名による絞り込み
+         * if ($request->filled('name')) {
+         * $query->where('company_id', $request->input('name'));
+         * }
+        */
 
         $products = $query->paginate(10);//10ページずつ表示
-        return view('login.product', ['companies' => $companies, 'products' => $products]);//$companiesと$productsというデータをresourcesのviewのビューファイルproduct.blade.phpに渡して表示せよ
+        return view('login.product', ['companies' => $companies, 'products' => $products]);
+        //$companiesと$productsというデータをresourcesのviewのビューファイルproduct.blade.phpに渡して表示せよ
+    }
+
+    /**
+     * 非同期処理にて表示
+     */
+
+    public function searchList(Request $request){
+        // 入力データを取得
+        $keyword = $request->input('keyword');
+        $company_name = $request->input('company_name');
+        $price_min = $request->input('price_min');
+        $price_max = $request->input('price_max');
+        $stock_min = $request->input('stock_min');
+        $stock_max = $request->input('stock_max');
+
+        // クエリを作成
+        $query = Product::query();
+
+        if ($keyword) {
+            $query->where('product_name', 'like', '%' . $keyword . '%');
+        }
+
+        if ($company_name) {
+            $query->whereHas('company', function ($q) use ($company_name) {
+                $q->where('company_name', $company_name);
+            });
+        }
+        
+        if ($price_min) {
+            $query->where('price', '>=', $price_min);
+        }
+        
+        if ($price_max) {
+            $query->where('price', '<=', $price_max);
+        }
+
+        if ($stock_min) {
+            $query->where('stock', '>=', $stock_min);
+        }
+
+        if ($stock_max) {
+            $query->where('stock', '<=', $stock_max);
+        }         
+        
+        $products = $query->paginate(10);//10ページずつ表示
+        // 部分ビューを返す
+        return view('login.partials.product_list', compact('products'));
     }
 
     /**
@@ -163,16 +214,27 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        DB::transaction(function () use ($id) {
-        $product = Product::find($id);
-        
-        //削除処理
-        $product->delete();
-        });
+        Log::info('Deleting product with ID: ' . $id);
 
-        //コメント表示
-        return view('login.product_delete');
+        //$deleted = DB::transaction(function () use ($id) { //$deleted変数を使ってトランザクション内の処理結果を返す
+            //$product = Product::find($id);
         
+                //削除処理
+                //$product->delete();
+                //if ($product) {
+                    // 商品を削除
+                    //$product->delete();
+                    //Log::info('Product deleted successfully.');
+                    //return true;
+                //} else {
+                    // 商品が見つからない場合の処理（例外処理など）
+                    //return false;
+                //}
+        //});       
+        
+        // 商品を削除せず、ただログを残し、成功レスポンスを返す
+        return response()->json(['message' => '商品を削除(非表示)にしました'], 200);
+
     }
 
 }

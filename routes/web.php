@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ManufacturerController; 
 
 
 /*
@@ -37,4 +38,8 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 Route::middleware(['auth'])->group(function () {
 // 商品一覧、詳細表示、新規登録、編集、更新、削除のルートを一括で定義
 Route::resource('products', ProductController::class);
+// 非同期処理
+Route::post('/search-list', [ProductController::class, 'searchList'])->name('searchList');
 });
+
+
