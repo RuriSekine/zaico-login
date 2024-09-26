@@ -24,6 +24,11 @@ class Product extends Model
         return $this->belongsTo(Company::class);
     }
 
+    // `Product`モデルが複数の`Sale`モデルに関連している
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
 /**`
      *バリデーションが成功した後に、新しい商品をデータベースに作成
      * @param  array  $data
