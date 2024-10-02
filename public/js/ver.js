@@ -47,6 +47,7 @@ $(document).ready(function() {
                     6: { sorter: false }, // 新規登録ボタンのカラムのソート無効化
                     }
                 });
+                bindDeleteEvent();
             },
             error: function(xhr) {
               // エラーハンドリング
